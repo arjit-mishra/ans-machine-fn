@@ -1,11 +1,10 @@
 import {Configuration, OpenAIApi} from 'openai';
 import {throwIfMissing} from "./utils";
 
-export default async ({req, res, log, error}) => {
+export default async (context) => {
   throwIfMissing(process.env, ['OPENAI_API_KEY']);
-
+  const {req, res, log, error} = context;
   try {
-    log("prompt: " + req.body);
     throwIfMissing(req.body, ['prompt']);
   } catch (err) {
     error("Invalid request in check ", err.message);
@@ -16,7 +15,7 @@ export default async ({req, res, log, error}) => {
     apiKey: process.env.OPENAI_API_KEY,
   }));
 
-  if (req.method === 'GET') {
+  if (req.method === 'POST') {
     try {
       const response = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
