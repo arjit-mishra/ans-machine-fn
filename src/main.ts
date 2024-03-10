@@ -5,7 +5,7 @@ export default async ({req, res, log, error}) => {
   throwIfMissing(process.env, ['OPENAI_API_KEY']);
 
   try {
-    log("prompt: " + req.body);
+    log("prompt: " + JSON.stringify(req.body));
     throwIfMissing(req.body, ['prompt']);
   } catch (err) {
     error("Invalid request in check ", err.message);
