@@ -5,9 +5,10 @@ export default async ({req, res, log, error}) => {
   throwIfMissing(process.env, ['OPENAI_API_KEY']);
 
   try {
+    log("prompt: " + req.body);
     throwIfMissing(req.body, ['prompt']);
   } catch (err) {
-    error("Invalid request in check ", err);
+    error("Invalid request in check ", err.message);
     return res.json({ok: false, error: err.message}, 400);
   }
 
@@ -26,7 +27,7 @@ export default async ({req, res, log, error}) => {
       log(completion);
       return res.json({ok: true, completion}, 200);
     } catch (err) {
-      error("Invalid request in get ", err);
+      error("Invalid request in get ", err.message);
       return res.json({ok: false, error: 'Failed to query model.'}, 500);
     }
   }
