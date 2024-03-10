@@ -16,7 +16,7 @@ export default async (context) => {
     apiKey: process.env.OPENAI_API_KEY,
   }));
 
-  if (req.method === 'GET') {
+  if (req.method === 'POST') {
     try {
       const response = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
